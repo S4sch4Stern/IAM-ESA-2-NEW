@@ -31,6 +31,12 @@ export default class ListviewViewController extends mwf.ViewController {
       this.createNewItem();
     };
 
+    this.switchCRUDOperation = this.root.querySelector("#switchCRUDOperation");
+
+    this.switchCRUDOperation.onclick = () => {
+      this.switchCRUDOps();
+    };
+
     entities.MediaItem.readAll().then((items) => {
       this.initialiseListview(items);
     });
@@ -96,6 +102,23 @@ export default class ListviewViewController extends mwf.ViewController {
       this.removeFromListview(returnValue.deletedItem._id);
     }
   }
+
+    /**
+   * method to switch CRUD Operation from localDB to remoteDB
+   */
+    switchCRUDOps() {
+      if (this.application.currentCRUDScope == "local") {
+        this.application.switchCRUD("remote");
+      } else {
+        this.application.switchCRUD("local");
+      }
+  
+      this.root.querySelector("#crudOperationStatus").innerHTML =
+        this.application.currentCRUDScope;
+      entities.MediaItem.readAll().then((items) => {
+        this.initialiseListview(items);
+      });
+    }
 
   /*
    * for views with listviews: bind a list item to an item view
