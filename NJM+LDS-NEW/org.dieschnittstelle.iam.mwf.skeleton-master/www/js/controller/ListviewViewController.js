@@ -13,6 +13,7 @@ export default class ListviewViewController extends mwf.ViewController {
   // TODO-REPEATED: declare custom instance attributes for this controller
   items;
   addNewMediaItemElement;
+  switchCRUDOperation;
 
   constructor() {
     super();
@@ -31,6 +32,7 @@ export default class ListviewViewController extends mwf.ViewController {
       this.createNewItem();
     };
 
+    // switching CRUD Operations
     this.switchCRUDOperation = this.root.querySelector("#switchCRUDOperation");
 
     this.switchCRUDOperation.onclick = () => {
@@ -88,21 +90,7 @@ export default class ListviewViewController extends mwf.ViewController {
     });
   }
 
-  /*
-   * for views that initiate transitions to other views
-   * NOTE: return false if the view shall not be returned to, e.g. because we immediately want to display its previous view. Otherwise, do not return anything.
-   */
-  async onReturnFromNextView(nextviewid, returnValue, returnStatus) {
-    // TODO: check from which view, and possibly with which status, we are returning, and handle returnValue accordingly
-    if (
-      nextviewid == "mediaReadview" &&
-      returnValue &&
-      returnValue.deletedItem
-    ) {
-      this.removeFromListview(returnValue.deletedItem._id);
-    }
-  }
-
+  
     /**
    * method to switch CRUD Operation from localDB to remoteDB
    */
@@ -119,6 +107,22 @@ export default class ListviewViewController extends mwf.ViewController {
         this.initialiseListview(items);
       });
     }
+
+
+  /*
+   * for views that initiate transitions to other views
+   * NOTE: return false if the view shall not be returned to, e.g. because we immediately want to display its previous view. Otherwise, do not return anything.
+   */
+  async onReturnFromNextView(nextviewid, returnValue, returnStatus) {
+    // TODO: check from which view, and possibly with which status, we are returning, and handle returnValue accordingly
+    if (
+      nextviewid == "mediaReadview" &&
+      returnValue &&
+      returnValue.deletedItem
+    ) {
+      this.removeFromListview(returnValue.deletedItem._id);
+    }
+  }
 
   /*
    * for views with listviews: bind a list item to an item view
