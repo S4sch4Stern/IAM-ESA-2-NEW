@@ -90,24 +90,41 @@ export default class ListviewViewController extends mwf.ViewController {
     });
   }
 
-  
-    /**
+  /**
    * method to switch CRUD Operation from localDB to remoteDB
    */
-    switchCRUDOps() {
-      if (this.application.currentCRUDScope == "local") {
-        this.application.switchCRUD("remote");
-      } else {
-        this.application.switchCRUD("local");
-      }
-  
-      this.root.querySelector("#crudOperationStatus").innerHTML =
-        this.application.currentCRUDScope;
-      entities.MediaItem.readAll().then((items) => {
-        this.initialiseListview(items);
-      });
+  switchCRUDOps() {
+    if (this.application.currentCRUDScope == "local") {
+      this.application.switchCRUD("remote");
+    } else {
+      this.application.switchCRUD("local");
     }
 
+    this.root.querySelector("#crudOperationStatus").innerHTML =
+      this.application.currentCRUDScope;
+    entities.MediaItem.readAll().then((items) => {
+      this.initialiseListview(items);
+    });
+  }
+
+  /**
+   * method delete-confirm-dialog
+   */
+
+  deleteItemConfirmDialog(item) {
+    this.showDialog("mediaItemDeleteDialog", {
+      item: item,
+      actionBindings: {
+        deleteItem: (event) => {
+          this.deleteItem(item);
+          this.hideDialog();
+        },
+        cancelDeleteDialog: (event) => {
+          this.hideDialog();
+        },
+      },
+    });
+  }
 
   /*
    * for views that initiate transitions to other views
@@ -128,7 +145,6 @@ export default class ListviewViewController extends mwf.ViewController {
    * for views with listviews: bind a list item to an item view
    * TODO: delete if no listview is used or if databinding uses ractive templates
    */
-
 
   /*
    * for views with listviews: react to the selection of a listitem

@@ -16,3 +16,9 @@
    align-items: center;
    justify-content: space-between;
 }
+
+.deleteDialogQuestion{
+   color: black;
+   font-weight: normal;
+   padding-left: 10px;
+}

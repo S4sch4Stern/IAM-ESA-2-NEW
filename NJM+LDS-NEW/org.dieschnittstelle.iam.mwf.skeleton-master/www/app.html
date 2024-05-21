@@ -6,21 +6,22 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>MY MWF APP</title>
     <!-- this tag avoids scaling the view on display -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <!-- for pwa, we may include the manifest
     <link rel="manifest" href="pwa/webapp-manifest.json"> -->
     <!-- load the styles -->
-    <link rel="stylesheet" href="lib/css/normalize.css"/>
-    <link rel="stylesheet" href="lib/css/mwf.css"/>
-    <link rel="stylesheet" href="lib/css/mwfIcons.css"/>
+    <link rel="stylesheet" href="lib/css/normalize.css" />
+    <link rel="stylesheet" href="lib/css/mwf.css" />
+    <link rel="stylesheet" href="lib/css/mwfIcons.css" />
     <!-- the application specific style -->
-    <link rel="stylesheet" href="css/myapp-style.css"/>
+    <link rel="stylesheet" href="css/myapp-style.css" />
     <!-- TODO: comment-in if mapviews shall be used. It seems that libs and css need to be accessed online rather than be provided locally, there is also some issue when using leaflet+offline manifest... -->
     <!--
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
@@ -32,9 +33,10 @@
     <script type="module" src="js/Main.js"></script>
 </head>
 <!-- TODO: change the application name if it is adapted -->
+
 <body data-mwf-application="MyApplication" class="mwf-loading-app">
 
- <!-- TODO-REPEATED: add new views here -->
+    <!-- TODO-REPEATED: add new views here -->
     <!--list-view -->
     <div class="mwf-view mwf-view-initial" id="mediaOverview" data-mwf-viewcontroller="ListviewViewController">
         <header>
@@ -57,7 +59,7 @@
         </main>
         <footer class="footerStyle">
             <p class="mwf-left-align" id="crudOperationStatus">local</p>
-            <button id="switchCRUDOperation" class =" mwf-imgbutton mwf-img-refresh mwf-right-align"></button>
+            <button id="switchCRUDOperation" class=" mwf-imgbutton mwf-img-refresh mwf-right-align"></button>
         </footer>
     </div>
 
@@ -90,7 +92,8 @@
         </header>
         <main>
             <ul>
-                <li class="mwf-li-singletitle mwf-menu-item" data-mwf-targetaction="deleteItem">Löschen</li>
+                <li class="mwf-li-singletitle mwf-menu-item" data-mwf-targetaction="deleteItemConfirmDialog">Löschen
+                </li>
                 <li class="mwf-li-singletitle mwf-menu-item" data-mwf-targetaction="editItem">Editieren</li>
             </ul>
         </main>
@@ -116,5 +119,24 @@
         </main>
     </div>
 
+    <!--Popup-dialog delete confirmation & cancel-->
+    <div class="mwf-dialog mwf-popup mwf-template mwf-databind mwf-view-component "
+        data-mwf-viewcontroller="GenericDialogTemplateViewController" data-mwf-templatename="mediaItemDeleteDialog">
+        <main>
+            <h2>Medium löschen</h2>
+            <h4 class="deleteDialogQuestion">Möchten Sie das Medium {{item.title}} wirklich löschen?</h4>
+
+            <div class="mwf-buttonbar">
+                <button class=" mwf-left-align mwf-button" type="button" on-click="cancelDeleteDialog"> Abbrechen
+                </button>
+                <button class=" mwf-button-prio mwf-right-align mwf-button" type="button" on-click="deleteItem">Löschen
+                </button>
+
+            </div>
+
+        </main>
+    </div>
+
 </body>
+
 </html>
