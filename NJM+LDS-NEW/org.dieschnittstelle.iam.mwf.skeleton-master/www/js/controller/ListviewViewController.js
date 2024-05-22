@@ -42,6 +42,11 @@ export default class ListviewViewController extends mwf.ViewController {
     entities.MediaItem.readAll().then((items) => {
       this.initialiseListview(items);
     });
+
+    // set the currentCRUDScope
+    this.root.querySelector("#crudOperationStatus").innerHTML =
+      this.application.currentCRUDScope;
+
     // call the superclass once creation is done
     super.oncreate();
   }
@@ -102,6 +107,7 @@ export default class ListviewViewController extends mwf.ViewController {
 
     this.root.querySelector("#crudOperationStatus").innerHTML =
       this.application.currentCRUDScope;
+
     entities.MediaItem.readAll().then((items) => {
       this.initialiseListview(items);
     });
@@ -110,7 +116,6 @@ export default class ListviewViewController extends mwf.ViewController {
   /**
    * method delete-confirm-dialog
    */
-
   deleteItemConfirmDialog(item) {
     this.showDialog("mediaItemDeleteDialog", {
       item: item,
